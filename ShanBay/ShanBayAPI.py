@@ -8,6 +8,7 @@ config = dev_config
 class ShanBayAPI(object):
     def __init__(self):
         self.session = requests.Session()
+        self.__has_login = False
 
     def __change_session_headers(self, key, value):
         self.session.headers.update({key: value})
@@ -23,6 +24,7 @@ class ShanBayAPI(object):
         try:
             response = self.session.post(url=url, data=post_data)
             if response.status_code == 200:
+                self.__has_login = True
                 return json.loads(response.text)
             else:
                 return False
