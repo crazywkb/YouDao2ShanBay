@@ -33,6 +33,20 @@ class ShanBayAPI(object):
             print(e)
             return False
 
+    def create_wordbook(self):
+        __method = 'create_wordbook'
+
+        self.__change_session_headers('content-type', 'application/x-www-form-urlencoded')
+        url = config.SHANBAY_API[__method]
+        print("There are something you need to input before creating a wordbook.")
+        title = input("Title: ")
+
+    def add_to_wordbook(self):
+        pass
+
+    def add_to_vocabulary(self):
+        pass
+
 
 if __name__ == '__main__':
     shanbay = ShanBayAPI()
