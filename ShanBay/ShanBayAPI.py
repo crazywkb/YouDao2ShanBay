@@ -1,6 +1,8 @@
-import requests
-import dev_config
 import json
+
+import requests
+
+import dev_config
 
 config = dev_config
 
@@ -33,21 +35,28 @@ class ShanBayAPI(object):
             print(e)
             return False
 
-    def create_wordbook(self):
-        __method = 'create_wordbook'
-
-        self.__change_session_headers('content-type', 'application/x-www-form-urlencoded')
+    def add_to_vocabulary(self, words):
+        __method = 'add_vocabulary'
         url = config.SHANBAY_API[__method]
-        print("There are something you need to input before creating a wordbook.")
-        title = input("Title: ")
+        params = config.SHANBAY_DATA[__method]
 
-    def add_to_wordbook(self):
-        pass
+        params['words'] = '\n'.join(words)
+        self.__change_session_headers('x-requested-with', 'XMLHttpRequest')
 
-    def add_to_vocabulary(self):
-        pass
+        try:
+            response = self.session.get(url=url, params=params)
+            if response.status_code == 200:
+                failed_list = json.loads(response.text)['notfound_words']
+                return response.text, failed_list
+
+            else:
+                return False, None
+
+        except Exception as e:
+            print(e)
+            return False, None
 
 
 if __name__ == '__main__':
     shanbay = ShanBayAPI()
-    print(shanbay.login())
+    shanbay.login()
