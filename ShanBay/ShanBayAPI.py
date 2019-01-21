@@ -2,9 +2,7 @@ import json
 
 import requests
 
-import dev_config
-
-config = dev_config
+import dev_config as config
 
 
 class ShanBayAPI(object):
@@ -37,6 +35,9 @@ class ShanBayAPI(object):
 
     def add_to_vocabulary(self, words):
         __method = 'add_vocabulary'
+        if not self.__has_login:
+            raise Exception("ShanBay not login.")
+
         url = config.SHANBAY_API[__method]
         params = config.SHANBAY_DATA[__method]
 
