@@ -3,6 +3,9 @@ from YouDao.YouDaoAPI import YouDaoAPI
 from utils.storage import write_result
 from utils.storage import read_result
 from bs4 import BeautifulSoup
+from nltk.stem import SnowballStemmer
+
+stemmer = SnowballStemmer('english')
 
 
 def get_wordlist_by_crawler():
@@ -58,5 +61,9 @@ if __name__ == '__main__':
     wordlist = get_wordlist_by_crawler()
     failed_words = upload(wordlist)
 
+    words = [stemmer.stem(word) for word in failed_words]
+    failed_words = upload(words)
+
     print("Words below fail to upload:")
     print(failed_words)
+
