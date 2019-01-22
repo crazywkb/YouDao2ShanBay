@@ -41,14 +41,18 @@ class ShanBayAPI(object):
         url = config.SHANBAY_API[__method]
         params = config.SHANBAY_DATA[__method]
 
-        params['words'] = '\n'.join(words)
+        if isinstance(words, list):
+            params['words'] = '\n'.join(words)
+        else:
+            params['words'] = words
+
         self.__change_session_headers('x-requested-with', 'XMLHttpRequest')
 
         try:
             response = self.session.get(url=url, params=params)
             if response.status_code == 200:
                 failed_list = json.loads(response.text)['notfound_words']
-                return response.text, failed_list
+                return True, failed_list
 
             else:
                 return False, None
