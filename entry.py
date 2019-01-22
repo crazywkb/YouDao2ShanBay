@@ -1,9 +1,10 @@
-from ShanBay.ShanBayAPI import ShanBayAPI
-from YouDao.YouDaoAPI import YouDaoAPI
-from utils.storage import write_result
-from utils.storage import read_result
 from bs4 import BeautifulSoup
 from nltk.stem import SnowballStemmer
+
+from ShanBay.ShanBayAPI import ShanBayAPI
+from YouDao.YouDaoAPI import YouDaoAPI
+from utils.storage import read_result
+from utils.storage import write_result
 
 stemmer = SnowballStemmer('english')
 
@@ -66,4 +67,3 @@ if __name__ == '__main__':
 
     print("Words below fail to upload:")
     print(failed_words)
-
